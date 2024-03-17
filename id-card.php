@@ -84,10 +84,12 @@
                                                   <div class='info-4'>
                                                       <div class='sign'>
                                                           <br>
-                                                          <p style='font-size:12px;    margin-bottom: 8px;'>Your Signature</p>
+                                                          <p style='font-size:12px;    margin-bottom: 8px;'>Principle Sign</p>
                                                         <p style='font-family: Dancing Script'>Nagesh H R</p>
 
                                                       </div>
+                                                  </div>
+                                                  </div>
                                                   </div>
                                                   <!-- id card end -->
                                         ";
@@ -371,7 +373,7 @@ hr.new2 {
 
  <!-- Navigation bar start  -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: black;">
-  <a class="navbar-brand" href="#"><img src="assets/images/logo1.png" width="50px" style="border-radius:50px"></a>
+  <a class="navbar-brand" href="#"><img src="assets/images/logo2.png" width="60px" style="border-radius:50px"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

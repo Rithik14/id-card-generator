@@ -145,7 +145,7 @@ else{
 <!-- -->
 <!-- Navigation bar start  -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: black;">
-  <a class="navbar-brand" href="#"><img src="assets/images/logo1.png"width="50px"style="border-radius:80px;"></a>
+  <a class="navbar-brand" href="#"><img src="assets/images/logo2.png"width="60px"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -237,12 +237,12 @@ else{
         <label for="inputState">Branch</label>
         <select name="grade" class="form-control">
           <option selected>Choose...</option>
-          <option value="IS">IS</option>
-          <option value="CS">CS</option>
-          <option value="ME">ME</option>
-          <option value="EC">EC</option>
-          <option value="CSD">CSD</option>
-          <option value="CSB">CSB</option>
+          <option name="grade" value="IS">IS</option>
+          <option name="grade" value="CS">CS</option>
+          <option name="grade" value="ME">ME</option>
+          <option name="grade" value="EC">EC</option>
+          <option name="grade" value="CSD">CSD</option>
+          <option name="grade" value="CSB">CSB</option>
         </select>
       </div>
       <div class="form-group col-md-2">
