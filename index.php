@@ -1,151 +1,379 @@
-<?php  
 
-// Connect to the Database 
-include('config.php');
+<?php 
+        $notfound = false;
+        include 'config.php';
+        $html = '';
+        if(isset($_POST['search'])){
 
-$insert = false;
-$update = false;
-$empty = false;
-$delete = false;
-$already_card = false;
+             $id_no = $_POST['id_no'];
 
+             $sql = "Select * from cards where id_no='$id_no' ";
 
+             $result = mysqli_query($conn, $sql);
+ 
+ 
+             if(mysqli_num_rows($result)>0){
+             $html="<div class='card' style='width:350px; padding:0;' >";
+     
+               $html.="";
+                         while($row=mysqli_fetch_assoc($result)){
+                             
+                            $name = $row["name"];
+                            $id_no = $row["id_no"];
+                            $grade = $row['grade'];
+                            $dob = $row['dob'];
+                            $address = $row['address'];
+                            $email = $row['email'];
+                            $exp_date = $row['exp_date'];
+                            $phone = $row['phone'];
+                            $address = $row['address'];
+                            $image = $row['image'];
+                            $date = date('M d, Y', strtotime($row['date']));
+                          
+                             
+                             $html.="
+                                        <!-- second id card  -->
+                                        <div class='container' style='text-align:left; border:2px dotted black;'>
+                                              <div class='header'>
+                                                
+                                              </div>
+                                  
+                                              <div class='container-2'>
+                                                  <div class='box-1'>
+                                                  <img src='$image'/>
+                                                  </div>
+                                                  <div class='box-2'>
+                                                      <h2>$name</h2>
+                                                      
+                                                  </div>
+                                                  <div class='box-3'>
+                                                      <img src='assets/images/logo1.png' alt=''>
+                                                  </div>
+                                              </div>
+                                  
+                                              <div class='container-3'>
+                                                  <div class='info-1'>
+                                                      <div class='id'>
+                                                          <h4>USN</h4>
+                                                          <p>$id_no</p>
+                                                      </div>
+                                  
+                                                      <div class='dob'>
+                                                          <h4>Phone</h4>
+                                                          <p>$phone</p>
+                                                      </div>
+                                
+                                                  </div>
+                                                  <div class='info-2'>
+                                                      <div class='join-date'>
+                                                          <h4>Joined Date</h4>
+                                                          <p>$date</p>
+                                                      </div>
+                                                      <div class='expire-date'>
+                                                          <h4>Expire Date</h4>
+                                                          <p>$exp_date</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class='info-3'>
+                                                      <div class='email'>
+                                                          <h4>Address</h4>
+                                                          <p>$address</p>
+                                                      </div>
+                                                      
+                                                  </div>
+                                                  <div class='info-4'>
+                                                      <div class='sign'>
+                                                          <br>
+                                                          <p style='font-size:12px;    margin-bottom: 8px;'>Principle Sign</p>
+                                                        <p style='font-family: Dancing Script'>Nagesh H R</p>
 
-if(isset($_GET['delete'])){
-  $sno = $_GET['delete'];
-  $delete = true;
-  $sql = "DELETE FROM `cards` WHERE `sno` = $sno";
-  $result = mysqli_query($conn, $sql);
-}
+                                                      </div>
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                                  <!-- id card end -->
+                                        ";
+                                        
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if (isset( $_POST['snoEdit'])){
-      // Update the record
-        $sno = $_POST["snoEdit"];
-        $name = $_POST["nameEdit"];
-        $id_no = $_POST["id_noEdit"];
+                         }
+     
 
-      // Sql query to be executed
-      $sql = "UPDATE `cards` SET `name` = '$name' , `id_no` = '$id_no' WHERE `cards`.`sno` = $sno";
-      $result = mysqli_query($conn, $sql);
-      if($result){
-        $update = true;
-    }
-    else{
-        echo "We could not update the record successfully";
-    }
-}
-else{
-    $name = $_POST["name"];
-    $id_no = $_POST["id_no"];
-    $grade = $_POST['grade'];
-    $dob = $_POST['dob'];
-    $address = $_POST['address'];
-    $email = $_POST['email'];
-    $exp_date = $_POST['exp_date'];
-    $phone = $_POST['phone'];
-
-    if($name == '' || $id_no == ''){
-        $empty = true;
-    }
-    else{
-        //Check that Card no. is Already Registerd or not.
-        $querry = mysqli_query($conn, "SELECT * FROM cards WHERE id_no= '$id_no' ");
-        if(mysqli_num_rows($querry)>0)
-        {
-             $already_card = true;
+             }
+            
         }
-        else{
 
-
-          // image upload 
-          $uploaddir = 'assets/uploads/';
-          $uploadfile = $uploaddir . basename($_FILES['image']['name']);
-
-      
-          if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile)) {
-              
-          } else {
-              echo "Possible file upload attack!\n";
-          }
-  // Sql query to be executed
-  $sql = "INSERT INTO `cards`(`name`, `id_no`, `email`, `phone`, `address`, `dob`, `exp_date`, `image`) VALUES ('$name','$id_no','$email]','$phone','$address','$dob','$exp_date','$uploadfile')"; 
-
-  // $sql = "INSERT INTO `cards` (`name`, `id_no`) VALUES ('$name', '$id_no')";
-  $result = mysqli_query($conn, $sql);
-
-
-
-   
-  if($result){ 
-      $insert = true;
-  }
-  else{
-      echo "The record was not inserted successfully because of this error ---> ". mysqli_error($conn);
-  } 
-}
-}
-}
-
- }
-?>
-<!-- -->
+             ?>
 <!doctype html>
 <html lang="en">
-<!-- -->
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="icon" type="image/png" href="images/favicon.png"/>
-  <title>Add New Student </title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="images/favicon.png"/>
+    <link rel="stylesheet" href="css/dashboard.css">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png"/>
 
-</head>
+    <title>Card Generation  <?php echo date("Y") ?></title>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 
-<body>
 
-  <!-- Edit Modal -->
-  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Edit This Card</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <form method="POST">
-          <div class="modal-body">
-            <input type="hidden" name="snoEdit" id="snoEdit">
-            <div class="form-group">
-              <label for="name">Student Name</label>
-              <input type="text" class="form-control" id="nameEdit" name="nameEdit">
-            </div>
 
-            <div class="form-group">
-              <label for="desc">USN</label>
-              <input class="form-control" id="id_noEdit" name="id_noEdit" rows="3"></input>
-            </div> 
-          </div>
-          <div class="modal-footer d-block mr-auto">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-<!-- -->
-<!-- Navigation bar start  -->
+<style>
+    
+body{
+   font-family:'arial';
+   }
+
+.lavkush img {
+  border-radius: 8px;
+  border: 2px solid blue;
+}
+span{
+
+    font-family: 'Orbitron', sans-serif;
+    font-size:16px;
+}
+hr.new2 {
+  border-top: 1px dashed black;
+  width:350px;
+  text-align:left;
+  align-items:left;
+}
+ /* second id card  */
+ p{
+     font-size: 13px;
+     margin-top: -5px;
+ }
+
+ 
+ .container {
+    width: 80vh;
+    height: 45vh;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0 1px 10px rgb(146 161 176 / 50%);
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.header {
+    /* border: 2px solid black; */
+    width: 63vh;
+    height: 14vh;
+    margin: 20px auto;
+    margin-left: 10px;
+    background-color: white;
+    /* box-shadow: 0 1px 10px rgb(146 161 176 / 50%); */
+    /* border-radius: 10px; */
+    background-image: url(assets/images/canaralogo.png);
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+.header h1 {
+    color: rgb(90 139 249);
+    text-align: right;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+
+.header p {
+    color: rgb(157, 51, 0);
+    text-align: right;
+    margin-right: 22px;
+    margin-top: -10px;
+}
+
+.container-2 {
+    /* border: 2px solid red; */
+    width: 73vh;
+    height: 10vh;
+    margin: 0px auto;
+    margin-top: -20px;
+    display: flex;
+}
+
+.box-1 {
+    border: 4px solid #fff;
+    width: 90px;
+    height: 95px;
+    margin: -40px 25px;
+    border-radius: 3px;
+}
+
+.box-1 img {
+    width: 82px;
+    height: 87px;
+    border-radius:10px;
+}
+
+.box-2 {
+    /* border: 2px solid purple; */
+    width: 33vh;
+    height: 8vh;
+    margin: 7px 0px;
+    padding: 5px 7px 0px 0px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+
+.box-2 h2 {
+    font-size: 1.7rem;
+    margin-top: -5px;
+    color: rgb(90 139 249);
+    ;
+}
+
+.box-2 p {
+    font-size: 0.7rem;
+    margin-top: -5px;
+    color: rgb(179, 116, 0);
+}
+
+.box-3 {
+    /* border: 2px solid rgb(21, 255, 0); */
+    width: 8vh;
+    height: 8vh;
+    margin-left:9vh;
+    margin-top:-13vh; 
+    z-index: 2;
+}
+.box-3 img{
+    border-radius:80px;
+}
+
+.box-3 img {
+    width: 15vh;
+}
+
+.container-3 {
+    /* border: 2px solid rgb(111, 2, 161); */
+    width: 73vh;
+    height: 12vh;
+    margin: 0px auto;
+    margin-top: 10px;
+    display: flex;
+    font-family: 'Shippori Antique B1', sans-serif;
+    font-size: 0.7rem;
+}
+
+.info-1 {
+    /* border: 1px solid rgb(255, 38, 0); */
+    width: 17vh;
+    height: 12vh;
+}
+
+.id {
+    /* border: 1px solid rgb(2, 92, 17); */
+    width: 17vh;
+    height: 5vh;
+}
+
+.id h4 {
+    color: rgb(90 139 249);
+    font-size:15px;
+}
+
+.dob {
+    /* border: 1px solid rgb(0, 46, 105); */
+    width: 17vh;
+    height: 5vh;
+    margin: 8px 0px 0px 0px;
+}
+
+.dob h4 {
+    color: rgb(90 139 249);
+    font-size:15px;
+}
+
+.info-2 {
+    /* border: 1px solid rgb(4, 0, 59); */
+    width: 17vh;
+    height: 12vh;
+}
+
+.join-date {
+    /* border: 1px solid rgb(2, 92, 17); */
+    width: 17vh;
+    height: 5vh;
+}
+
+.join-date h4 {
+    color: rgb(90 139 249);
+    font-size:15px;
+}
+
+.expire-date {
+    /* border: 1px solid rgb(0, 46, 105); */
+    width: 17vh;
+    height: 5vh;
+    margin: 8px 0px 0px 0px;
+}
+
+.expire-date h4 {
+    color: rgb(90 139 249);
+    font-size:15px;
+}
+
+.info-3 {
+    /* border: 1px solid rgb(255, 38, 0); */
+    width: 17vh;
+    height: 12vh;
+}
+
+.email {
+    /* border: 1px solid rgb(2, 92, 17); */
+    width: 22vh;
+    height: 5vh;
+}
+ 
+.email h4 {
+    color: rgb(90 139 249);
+    font-size:15px;
+}
+
+.phone {
+    /* border: 1px solid rgb(0, 46, 105); */
+    width: 17vh;
+    height: 5vh;
+    margin: 8px 0px 0px 0px;
+}
+
+.info-4 {
+    /* border: 2px solid rgb(255, 38, 0); */
+    width: 22vh;
+    height: 12vh;
+    margin: 0px 0px 0px 0px;
+    font-size:15px;
+}
+
+.phone h4 {
+    color: rgb(90 139 249);
+    font-size:15px;
+}
+
+.sign {
+    /* border: 1px solid rgb(0, 46, 105); */
+    width: 17vh;
+    height: 5vh;
+    margin: 41px 0px 0px 20px;
+    text-align: center;
+}
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script>
+  </head>
+  <body>
+
+ <!-- Navigation bar start  -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: black;">
-  <a class="navbar-brand" href="#"><img src="assets/images/logo2.png"width="60px"></a>
+  <a class="navbar-brand" href="#"><img src="assets/images/logo2.png" width="60px" style="border-radius:50px"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -153,225 +381,87 @@ else{
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="id-card.php">ID Card Genarator</a>
+        <a class="nav-link" href="welcome.php">Admin</a>
       </li>
-<!-- -->
     </ul>
-
   </div>
 </nav>
 <!-- Navigation bar end  -->
 
-  <?php
-  if($insert){
-    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-    <strong>Success!</strong> Your Card has been inserted successfully
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>×</span>
-    </button>
-  </div>";
-  }
-  ?><!-- -->
-  <?php
-  if($delete){
-    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-    <strong>Success!</strong> Your Card has been deleted successfully
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>×</span>
-    </button>
-  </div>";
-  }
-  ?>
-  <?php
-  if($update){
-    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-    <strong>Success!</strong> Your Card has been updated successfully
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>×</span>
-    </button>
-  </div>";
-  }
-  ?><!-- -->
-   <?php
-  if($empty){
-    echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
-    <strong>Error!</strong> The Fields Cannot Be Empty! Please Give Some Values.
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>×</span>
-    </button>
-  </div>";
-  }
-  ?><!-- -->
-     <?php
-  if($already_card){
-    echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
-    <strong>Error!</strong> This Card is Already Added.
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>×</span>
-    </button>
-  </div>";
-  }
-  ?>
-  
-  <div class="container my-4">
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-  <i class="fa fa-plus"></i> Add New Card
-  </button>
-  <a href="id-card.php" class="btn btn-primary">
-  <i class="fa fa-address-card"></i> Generate ID Card
-</a>
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
+  <br>
 
-    <form method="POST" enctype="multipart/form-data">
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputCity">Student Name</label>
-        <input type="text" name="name" class="form-control" id="inputCity">
-      </div><!-- -->
-      <div class="form-group col-md-4">
-        <label for="inputState">Branch</label>
-        <select name="grade" class="form-control">
-          <option selected>Choose...</option>
-          <option name="grade" value="IS">IS</option>
-          <option name="grade" value="CS">CS</option>
-          <option name="grade" value="ME">ME</option>
-          <option name="grade" value="EC">EC</option>
-          <option name="grade" value="CSD">CSD</option>
-          <option name="grade" value="CSB">CSB</option>
-        </select>
-      </div>
-      <div class="form-group col-md-2">
-        <label for="inputZip">Date Of Birth</label>
-        <input type="date" name="dob" class="form-control">
-      </div>
-    </div><!-- -->
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputCity">Address</label>
-        <input type="text" name="address" class="form-control">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputState">Email Id</label>
-        <input type="text" name="email" class="form-control">
-      </div>
-      <div class="form-group col-md-2">
-        <label for="inputZip">Expire Date</label>
-        <input type="date" name="exp_date" class="form-control">
+<div class="row" style="margin: 0px 20px 5px 20px">
+  <div class="col-sm-6">
+    <div class="card jumbotron">
+      <div class="card-body">
+        <form class="form" method="POST" action="index.php">.
+        <label for="exampleInputEmail1">Student USN</label>
+        <input class="form-control mr-sm-2" type="search" placeholder="Enter Id Card No." name="id_no">
+        <small id="emailHelp" class="form-text text-muted">Every student's should have unique Id no.</small>
+        <br>
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="search">Generate</button>
+        </form>
       </div>
     </div>
-      <!-- -->
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="id_no">USN</label>
-          <input class="form-control" id="id_no" name="id_no" ></input>
-        </div>
-        <div class="form-group col-md-3">
-          <label for="phone">Phone No.</label>
-          <input class="form-control" id="phone" name="phone" ></input>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="photo">Photo</label>
-          <input type="file" name="image" />
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add Card</button>
-    </form>
   </div>
-</div>
-<!-- -->
-  <div class="container my-4">
-
-
-    <table class="table" id="myTable">
-      <thead>
-        <tr>
-          <th scope="col">S.No</th>
-          <th scope="col">Name</th>
-          <th scope="col">USN</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead><!-- -->
-      <tbody>
-        <?php 
-          $sql = "SELECT * FROM `cards` order by 1 DESC";
-          $result = mysqli_query($conn, $sql);
-          $sno = 0;
-          while($row = mysqli_fetch_assoc($result)){
-            $sno = $sno + 1;
-            echo "<tr>
-            <th scope='row'>". $sno . "</th>
-            <td>". $row['name'] . "</td>
-            <td>". $row['id_no'] . "</td>
-            <td> <button class='edit btn btn-sm btn-primary' id=".$row['sno'].">Edit</button> <button class='delete btn btn-sm btn-primary' id=d".$row['sno'].">Delete</button>  </td>
-          </tr>";
-        } 
-          ?>
-
-
-      </tbody>
-    </table>
+  <div class="col-sm-6">
+      <div class="card">
+          <div class="card-header" >
+              Here is your Id Card
+          </div>
+        <div class="card-body" id="mycard">
+          <?php echo $html ?>
+        </div>
+        <br>
+        
+     </div>
   </div>
-  <hr>
   
+<hr>
+<button id="demo" class="downloadtable btn btn-primary" onclick="downloadtable()"> Download Id Card</button>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <script>
+
+    function downloadtable() {
+
+        var node = document.getElementById('mycard');
+
+        domtoimage.toPng(node)
+            .then(function (dataUrl) {
+                var img = new Image();
+                img.src = dataUrl;
+                downloadURI(dataUrl, "ccbd-id-card.png")
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong', error);
+            });
+
+    }
+
  
-  
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
-  <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#myTable').DataTable();
 
-    });
-  </script>
-  <script>
-    edits = document.getElementsByClassName('edit');
-    Array.from(edits).forEach((element) => {
-      element.addEventListener("click", (e) => {
-        console.log("edit ");
-        tr = e.target.parentNode.parentNode;
-        name = tr.getElementsByTagName("td")[0].innerText;
-        id_no = tr.getElementsByTagName("td")[1].innerText;
-        console.log(name, id_no);
-        nameEdit.value = name;
-        id_noEdit.value = id_no;
-        snoEdit.value = e.target.id;
-        console.log(e.target.id)
-        $('#editModal').modal('toggle');
-      })
-    })
+    function downloadURI(uri, name) {
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+    }
 
-    deletes = document.getElementsByClassName('delete');
-    Array.from(deletes).forEach((element) => {
-      element.addEventListener("click", (e) => {
-        console.log("edit ");
-        sno = e.target.id.substr(1);
 
-        if (confirm("Are you sure you want to delete this note!")) {
-          console.log("yes");
-          window.location = `index.php?delete=${sno}`;
-          // TODO: Create a form and use post request to submit a form
-        }
-        else {
-          console.log("no");
-        }
-      })
-    })
-  </script>
-</body>
-<!-- -->
+
+</script>
+  </body>
 </html>
