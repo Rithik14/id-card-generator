@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2024 at 06:06 PM
+-- Generation Time: Apr 03, 2024 at 02:33 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cards` (
   `sno` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `grade` varchar(3) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `dept` varchar(50) NOT NULL,
   `id_no` varchar(15) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
   `phone` varchar(12) DEFAULT NULL,
@@ -45,10 +45,12 @@ CREATE TABLE `cards` (
 -- Dumping data for table `cards`
 --
 
-INSERT INTO `cards` (`sno`, `name`, `grade`, `id_no`, `email`, `phone`, `address`, `dob`, `date`, `exp_date`, `image`) VALUES
-(1, 'Rithik k', '', '4CB20IS042', 'rithikkumble@gmail.com]', '06282711688', 'kumble', '2024-03-12', '2024-03-11 23:18:19', '2024-03-13', 'assets/uploads/photo[rithik].jpg'),
-(2, 'Rithik Kumble', '', '4CB20IS040', 'ravi@gmail.com]', '06282711688', 'Durga Kripa house chc road kumble', '2024-03-14', '2024-03-13 00:12:03', '2024-03-15', 'assets/uploads/profilepic.jpg'),
-(4, 'Rithik K', '', '4CB20IS043', 'rithikkumble@gmail.com]', '6282711688', 'C H C Road, Kumbla', '2024-03-13', '2024-03-23 21:18:41', '2024-03-12', 'assets/uploads/');
+INSERT INTO `cards` (`sno`, `name`, `dept`, `id_no`, `email`, `phone`, `address`, `dob`, `date`, `exp_date`, `image`) VALUES
+(9, 'King', 'Computer Science & B', '4CB20CB001', 'raj@gmail.com', '6282711699', 'goa', '2021-05-26', '2024-03-26 22:17:45', '2025-03-26', 'assets/uploads/2.jpg'),
+(8, 'Rithik K', 'Information Science', '4CB20IS042', 'rithikkumble@gmail.com', '6282711688', 'Kumble', '2020-04-07', '2024-03-26 22:11:12', '2024-06-14', 'assets/uploads/photo[rithik].jpg'),
+(10, 'Rajath', 'Computer Science', '4CB20CS081', 'rajath@gmail.com', '6282711680', 'mangalore', '2021-03-09', '2024-03-26 22:52:04', '2024-03-14', 'assets/uploads/'),
+(11, 'niki', 'Information Science', '4CB20IS036', 'niki@gmail.com', '6282711677', 'mangalore', '2021-01-01', '2024-03-26 22:56:02', '2024-03-21', 'assets/uploads/'),
+(12, 'shwe', 'Information Science', '4CB20IS056', 'shwe@gmail.com', '6282711699', 'mangalore', '2022-01-26', '2024-03-26 22:58:00', '2024-03-12', 'assets/uploads/');
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`

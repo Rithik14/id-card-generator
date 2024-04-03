@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 else{
     $name = $_POST["name"];
     $id_no = $_POST["id_no"];
-    $grade = $_POST['grade'];
+    $dept = $_POST['dept'];
     $dob = $_POST['dob'];
     $address = $_POST['address'];
     $email = $_POST['email'];
@@ -68,7 +68,7 @@ else{
               echo "Possible file upload attack!\n";
           }
   // Sql query to be executed
-  $sql = "INSERT INTO `cards`(`name`, `id_no`, `email`, `phone`, `address`, `dob`, `exp_date`, `image`) VALUES ('$name','$id_no','$email]','$phone','$address','$dob','$exp_date','$uploadfile')"; 
+  $sql = "INSERT INTO `cards`(`name`, `id_no`, `dept` ,`email`, `phone`, `address`, `dob`, `exp_date`, `image`) VALUES ('$name','$id_no','$dept','$email','$phone','$address','$dob','$exp_date','$uploadfile')"; 
 
   // $sql = "INSERT INTO `cards` (`name`, `id_no`) VALUES ('$name', '$id_no')";
   $result = mysqli_query($conn, $sql);
@@ -242,14 +242,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       </div><!-- -->
       <div class="form-group col-md-4">
         <label for="inputState">Branch</label>
-        <select name="grade" class="form-control">
+        <select name="dept" class="form-control">
           <option selected>Choose...</option>
-          <option name="grade" value="IS">IS</option>
-          <option name="grade" value="CS">CS</option>
-          <option name="grade" value="ME">ME</option>
-          <option name="grade" value="EC">EC</option>
-          <option name="grade" value="CSD">CSD</option>
-          <option name="grade" value="CSB">CSB</option>
+          <option name="dept" value="Information Science">IS</option>
+          <option name="dept" value="Computer Science">CS</option>
+          <option name="dept" value="Mechanical Engineering">ME</option>
+          <option name="dept" value="Electronics & Communication">EC</option>
+          <option name="dept" value="Artificial Intelligence">AI</option>
+          <option name="dept" value="CSD">CSD</option>
+          <option name="dept" value="CSB">CSB</option>
         </select>
       </div>
       <div class="form-group col-md-2">

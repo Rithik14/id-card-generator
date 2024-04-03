@@ -20,7 +20,7 @@
                              
                             $name = $row["name"];
                             $id_no = $row["id_no"];
-                            $grade = $row['grade'];
+                            $dept = $row['dept'];
                             $dob = $row['dob'];
                             $address = $row['address'];
                             $email = $row['email'];
@@ -75,11 +75,14 @@
                                                       </div>
                                                   </div>
                                                   <div class='info-3'>
-                                                      <div class='email'>
+                                                  <div class='join-date'>
+                                                    <h4>Branch</h4>        
+                                                    <p>$dept</p>
+                                                      </div>    
+                                                  <div class='expire-date'>
                                                           <h4>Address</h4>
                                                           <p>$address</p>
                                                       </div>
-                                                      
                                                   </div>
                                                   <div class='info-4'>
                                                       <div class='sign'>
@@ -327,7 +330,13 @@ hr.new2 {
     width: 17vh;
     height: 12vh;
 }
+.info-5 {
+    /* border: 1px solid rgb(255, 38, 0); */
 
+}
+.dept h4{
+
+}
 .email {
     /* border: 1px solid rgb(2, 92, 17); */
     width: 22vh;
